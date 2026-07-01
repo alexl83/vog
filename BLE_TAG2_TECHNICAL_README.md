@@ -30,6 +30,7 @@ This document consolidates the recovered `BLE Tag2` advertisement format, the ap
   - byte `1` to the second status field
   - byte `2` to fast polling
   - bytes `3..8` to timing/counter fields
+- `CustomAdapter.getZTagCode(...)` derives a decimal display code from `macString` by stripping `:` and parsing the MAC as hexadecimal.
 - `Class_Device` keeps a separate `buttonPressed` boolean that is consumed by the UI and is not the same as the payload byte `9`.
 - `MyListFragment` uses a 1-second UI refresh timer, but that does not touch the advertiser payload.
 - No app-side code path was found that clears byte `9`.

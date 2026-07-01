@@ -394,6 +394,7 @@
 <li>bytes <code>3..8</code> to timing/counter fields</li>
 </ul>
 </li>
+<li><code>CustomAdapter.getZTagCode(...)</code> derives a decimal display code from <code>macString</code> by stripping <code>:</code> and parsing the MAC as hexadecimal.</li>
 <li><code>Class_Device</code> keeps a separate <code>buttonPressed</code> boolean that is consumed by the UI and is not the same as the payload byte <code>9</code>.</li>
 <li><code>MyListFragment</code> uses a 1-second UI refresh timer, but that does not touch the advertiser payload.</li>
 <li>No app-side code path was found that clears byte <code>9</code>.</li>

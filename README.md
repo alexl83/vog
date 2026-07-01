@@ -62,6 +62,8 @@ Current working interpretation:
 - `bytes 7..8`: `connectionCounter`, little-endian
 - `byte 9`: firmware-side mode/event latch
 
+In the UI, the app also derives a decimal display code from the MAC address, which can function as the operator-facing tag identifier in deployments that bind that code to an employee or person record.
+
 Multi-byte fields use little-endian encoding. Single-byte fields are endian-independent.
 
 ## How To Use This Repo

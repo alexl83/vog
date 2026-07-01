@@ -328,6 +328,7 @@ The app contains named services/characteristics for:
   - it rebuilds the device object from scan results
   - it uses parsed advertisement data
   - it classifies the device into `BLE_TYPE`
+- The UI layer also derives a decimal display code from the MAC via `CustomAdapter.getZTagCode(...)`, which strips `:` from `macString` and parses it as hexadecimal before rendering it as a human-readable tag code.
 
 ## Emulation notes
 

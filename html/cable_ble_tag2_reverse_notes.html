@@ -702,6 +702,7 @@
 <li>it classifies the device into <code>BLE_TYPE</code></li>
 </ul>
 </li>
+<li>The UI layer also derives a decimal display code from the MAC via <code>CustomAdapter.getZTagCode(...)</code>, which strips <code>:</code> from <code>macString</code> and parses it as hexadecimal before rendering it as a human-readable tag code.</li>
 </ul>
 <h2>Emulation notes</h2>
 <ul>
