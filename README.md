@@ -4,6 +4,31 @@ This repository is the final documentation bundle for the BLE Tag2 analysis work
 
 It is meant for someone who did not follow the investigation from the beginning and wants a fast, reliable overview of what was learned, what was inferred from live traces, and what the payload structure means in practice.
 
+## Application Scope
+
+BLE Tag2 sits inside a broader vendor ecosystem of BLE tags and related reader/configuration flows.
+
+In practical terms, this work is about how the vendor's Android app:
+
+- scans for nearby devices
+- classifies them into product families
+- reads the advertisement payload broadcast by the tag
+- maps those bytes into internal fields
+- writes configuration values back to the device when needed
+- handles family-specific OTA update paths
+
+The reverse engineering therefore covers both the tag side and the reader/scanner side of the interaction.
+
+The same app codebase includes multiple device families, including:
+
+- `ZTAG`
+- `ZTAG_SL`
+- `TAG_R`
+- `Proximity`
+- `XIO`
+
+That means BLE Tag2 is not treated here as an isolated gadget. It is part of a larger vendor line where tags, readers/scanners, and configuration/firmware workflows are all connected.
+
 ## What This Work Covers
 
 The project focused on the BLE Tag2 Android app and the manufacturer payload emitted by BLE Tag2 devices.
