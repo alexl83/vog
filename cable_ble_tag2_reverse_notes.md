@@ -1,7 +1,6 @@
 # caBLE 4.9 Reverse Notes
 
 Source analyzed:
-- `/Users/alex/Downloads/CaBLE_4.9_APKPure.xapk`
 - Base APK: `com.zucchettiaxess.bletagtools.apk`
 
 ## High-level takeaways
