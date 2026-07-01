@@ -1,0 +1,1077 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>caBLE 4.9 Reverse Notes</title>
+  <style>
+  :root {
+    color-scheme: light;
+    --bg: #eef4fb;
+    --panel: #ffffff;
+    --panel-soft: #f7fbff;
+    --ink: #10253a;
+    --muted: #52657b;
+    --line: #d4dfec;
+    --accent: #0b4f8a;
+    --accent-2: #1672b8;
+    --accent-soft: #eaf4ff;
+    --shadow: 0 16px 40px rgba(16, 37, 58, 0.08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(126, 193, 255, 0.20), transparent 28%),
+      radial-gradient(circle at 85% 10%, rgba(11, 79, 138, 0.08), transparent 25%),
+      linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    color: var(--ink);
+  }
+  main {
+    max-width: 1040px;
+    margin: 36px auto 56px;
+    padding: 0 24px 48px;
+  }
+  header {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0)),
+      linear-gradient(135deg, #071b2f, #0b4f8a 65%, #1672b8);
+    color: white;
+    border-radius: 24px;
+    padding: 30px 32px 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 28%);
+    pointer-events: none;
+  }
+  main > header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 2.8vw, 2.65rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+    position: relative;
+    z-index: 1;
+  }
+  header p {
+    margin: 12px 0 0;
+    color: rgba(255,255,255,0.88);
+    max-width: 78ch;
+    font-size: 1rem;
+    line-height: 1.65;
+    position: relative;
+    z-index: 1;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin-top: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .chip {
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 999px;
+    padding: 5px 11px;
+    background: rgba(255,255,255,0.07);
+    font-size: 0.88rem;
+    letter-spacing: 0.01em;
+  }
+  a.chip {
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  a.chip:hover {
+    background: rgba(255,255,255,0.13);
+    text-decoration: none;
+  }
+  .chip strong { font-weight: 700; }
+  article {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 30px 34px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .page-title {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 22px;
+  }
+  .page-title h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .intro {
+    margin: 0 0 8px;
+    color: var(--muted);
+  }
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .doc-card {
+    display: block;
+    background: linear-gradient(180deg, #ffffff, var(--panel-soft));
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 18px 17px;
+    box-shadow: 0 8px 22px rgba(16, 37, 58, 0.05);
+    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    text-decoration: none;
+  }
+  .doc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(16, 37, 58, 0.09);
+    border-color: #a9c6e3;
+    text-decoration: none;
+  }
+  .doc-card .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-2);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .doc-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.03rem;
+    line-height: 1.28;
+    color: #1d3d61;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .doc-card p {
+    margin: 0;
+    color: #5f7288;
+    font-size: 0.93rem;
+    line-height: 1.58;
+  }
+  .doc-card .path {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: #6b8096;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    word-break: break-all;
+  }
+  h1, h2, h3, h4 {
+    color: #153a63;
+    line-height: 1.15;
+    scroll-margin-top: 24px;
+  }
+  h1 { font-size: 1.78rem; margin: 0 0 1rem; letter-spacing: -0.02em; }
+  h2 { font-size: 1.5rem; margin: 2.1rem 0 0.9rem; letter-spacing: -0.015em; }
+  h3 { font-size: 1.12rem; margin: 1.45rem 0 0.6rem; }
+  p, li {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+  p, ul, ol, table, pre, blockquote {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; text-underline-offset: 0.15em; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.92em;
+    background: var(--accent-soft);
+    color: #0d3d69;
+    padding: 0.14rem 0.34rem;
+    border-radius: 6px;
+  }
+  pre {
+    overflow: auto;
+    background: linear-gradient(180deg, #0f172a, #102846);
+    color: #e2e8f0;
+    padding: 18px 20px;
+    border-radius: 18px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.88rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid #b9cbe0;
+    background: white;
+  }
+  th, td {
+    border-bottom: 1px solid #d7e2ee;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: linear-gradient(180deg, #0c568f, #0a4578);
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  tr:nth-child(even) td { background: #f8fbff; }
+  td:first-child, th:first-child { border-left: 0; }
+  td:last-child, th:last-child { border-right: 0; }
+  table code {
+    background: transparent;
+    color: #143252;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.94em;
+    font-weight: 600;
+  }
+  blockquote {
+    border-left: 4px solid #8cc7e8;
+    background: #f4fbff;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+    color: #24435f;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 1.5rem 0;
+  }
+  .doc-source {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    color: #6b8096;
+    font-size: 0.82rem;
+    margin-top: 10px;
+  }
+  .back-index {
+    position: absolute;
+    right: 34px;
+    bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(11, 79, 138, 0.08);
+    border: 1px solid rgba(11, 79, 138, 0.18);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .back-index:hover {
+    background: rgba(11, 79, 138, 0.12);
+    text-decoration: none;
+  }
+  @media (max-width: 760px) {
+    main { margin: 20px auto 32px; padding: 0 14px 28px; }
+    header, article { border-radius: 20px; padding: 22px 18px; }
+    .doc-grid { grid-template-columns: 1fr; }
+    .back-index {
+      position: static;
+      margin-top: 16px;
+      width: fit-content;
+    }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>caBLE 4.9 Reverse Notes</h1>
+      <p>Source analyzed: - `/Users/alex/Downloads/CaBLE_4.9_APKPure.xapk` - Base APK: `com.zucchettiaxess.bletagtools.apk`</p>
+    </header>
+    <article>
+      <h1>caBLE 4.9 Reverse Notes</h1>
+<p>Source analyzed:</p>
+<ul>
+<li><code>/Users/alex/Downloads/CaBLE_4.9_APKPure.xapk</code></li>
+<li>Base APK: <code>com.zucchettiaxess.bletagtools.apk</code></li>
+</ul>
+<h2>High-level takeaways</h2>
+<ul>
+<li>The app is organized around a custom BLE GATT stack, not a generic GATT client.</li>
+<li>The code clearly separates device families:<ul>
+<li><code>ZTAG</code></li>
+<li><code>TAG_R</code></li>
+<li><code>ZTAG_SL</code></li>
+<li><code>Proximity</code></li>
+<li><code>XIO</code></li>
+</ul>
+</li>
+<li>OTA support is built in and references device-specific firmware blobs:<ul>
+<li><code>otafileTag2.gbl</code></li>
+<li><code>otafileTagP.gbl</code></li>
+<li><code>otafileTagR.gbl</code></li>
+<li><code>otafileTagX.gbl</code></li>
+</ul>
+</li>
+<li>The OTA format is Silicon Labs <code>.gbl</code>, which strongly suggests these tags are built on a Silicon Labs BLE platform.</li>
+</ul>
+<h2>Main BLE classes</h2>
+<ul>
+<li><p><code>com.zucchettiaxess.bletagtools.Blecore.Ble_Scan</code></p>
+<ul>
+<li>handles scan start/stop</li>
+<li>maps discovered devices to the supported product families</li>
+<li>exposes family-specific connect entry points</li>
+</ul>
+</li>
+<li><p><code>com.zucchettiaxess.bletagtools.Blecore.Ble_Gatt</code></p>
+<ul>
+<li>generic GATT base layer</li>
+<li>connect / disconnect / service discovery</li>
+<li>characteristic read/write helpers</li>
+<li>common helper methods like hex conversion and signed reads</li>
+</ul>
+</li>
+<li><p><code>com.zucchettiaxess.bletagtools.Blecore.Ble_Gatt_TAG_R</code></p>
+<ul>
+<li>TAG-R specific GATT wrapper</li>
+</ul>
+</li>
+<li><p><code>com.zucchettiaxess.bletagtools.Blecore.Ble_Gatt_ZTAG_SL</code></p>
+<ul>
+<li>ZTAG-SL specific GATT wrapper</li>
+</ul>
+</li>
+<li><p><code>com.zucchettiaxess.bletagtools.Blecore.Ble_Gatt_ProximityTAG</code></p>
+<ul>
+<li>proximity tag specific GATT wrapper</li>
+</ul>
+</li>
+<li><p><code>com.zucchettiaxess.bletagtools.Blecore.BLE_Gatt_XIO</code></p>
+<ul>
+<li>XIO-specific GATT wrapper</li>
+</ul>
+</li>
+<li><p><code>com.zucchettiaxess.bletagtools.Blecore.Ble_OTA_Update</code></p>
+<ul>
+<li>firmware update logic</li>
+<li>packetized update flow</li>
+<li>temp-file creation and OTA state tracking</li>
+</ul>
+</li>
+</ul>
+<h2>Concrete UUIDs recovered</h2>
+<h3>Generic ZTAG config</h3>
+<ul>
+<li><code>UUID_SERVICE_ZTAG_CONFIG</code> = <code>B9B5CA6F-5753-4870-9BFB-45376D217623</code></li>
+<li><code>UUID_CHARS_BVERS</code> = <code>FEDFBECE-C80B-473b-A718-48E284FAFBF9</code></li>
+<li><code>UUID_CHARS_FAST_ADV_MSEC</code> = <code>91345D99-7DE8-41a9-80EF-1172198382E5</code></li>
+<li><code>UUID_CHARS_SLOW_ADV_MSEC</code> = <code>0EF4B4A4-CA04-4d61-AB8D-1345D19A9C43</code></li>
+<li><code>UUID_CHARS_LED_CONTROL</code> = <code>4BAD317F-DB6C-4fdc-B1B4-106825E7836E</code></li>
+<li><code>UUID_CHARS_AUTO_DISC_COUNT</code> = <code>CF7759A7-8F26-4cc1-9395-19B8E4597CFB</code></li>
+<li><code>UUID_CHARS_MOTION_CONTROL</code> = <code>E69AF476-8F07-40a0-9E45-125CEC546B7D</code></li>
+<li><code>UUID_CHARS_CONNECT_CONTROL</code> = <code>78537281-3873-443a-B3CB-BAA8995C5521</code></li>
+<li><code>UUID_CHARS_TX_POWER</code> = <code>d990b4a1-ecd0-4300-a88c-cf828962d37f</code></li>
+<li><code>SERVICE_OTA</code> = <code>E4E37000-7A01-4507-8EFB-666B4EFC257F</code></li>
+<li><code>CHARACTERISTIC_CONTROL_NO_ACK</code> = <code>01737572-6573-686a-6f73-68692e636f6d</code></li>
+<li><code>CHARACTERISTIC_DATA_ACK</code> = <code>00737572-6573-686a-6f73-68692e636f6d</code></li>
+</ul>
+<h3>TAG_R</h3>
+<ul>
+<li><code>UUID_SERVICE_TAGR_CONFIG</code> = <code>e8df2b80-14d7-4e68-aaf4-66f6c31a2b95</code></li>
+<li><code>UUID_CHARS_FAST_ADV_MSEC</code> = <code>91345D99-7DE8-41a9-80EF-1172198382E5</code></li>
+<li><code>UUID_CHARS_SLOW_ADV_MSEC</code> = <code>0EF4B4A4-CA04-4d61-AB8D-1345D19A9C43</code></li>
+<li><code>UUID_CHARS_LED_CONTROL</code> = <code>4BAD317F-DB6C-4fdc-B1B4-106825E7836E</code></li>
+<li><code>UUID_CHARS_AUTO_DISC_COUNT</code> = <code>CF7759A7-8F26-4cc1-9395-19B8E4597CFB</code></li>
+<li><code>UUID_CHARS_MOTION_CONTROL</code> = <code>E69AF476-8F07-40a0-9E45-125CEC546B7D</code></li>
+<li><code>UUID_CHARS_CONNECT_CONTROL</code> = <code>78537281-3873-443a-B3CB-BAA8995C5521</code></li>
+<li><code>UUID_CHARS_TX_POWER</code> = <code>d990b4a1-ecd0-4300-a88c-cf828962d37f</code></li>
+<li><code>UUID_CHARS_BVERS</code> = <code>660c724a-ed3e-4748-9e6b-eeafe341ed80</code></li>
+<li><code>UUID_CHARS_FAST_BLINK_MSEC</code> = <code>3851a81e-13b5-4ecf-b98a-c278ffbb79af</code></li>
+<li><code>UUID_CHARS_SLOW_BLINK_MSEC</code> = <code>0adc95e2-5fcf-4ad0-ad84-a980aeb41827</code></li>
+<li><code>UUID_CHARS_DW_TX_POWER</code> = <code>57ca86da-955d-4264-b3df-49a4f14f9fc1</code></li>
+<li><code>UUID_CHARS_ALARM_THRESHOLD</code> = <code>6d76f866-8a14-45e6-8594-0d994629a33f</code></li>
+<li><code>UUID_CHARS_BUZZER_CONTROL</code> = <code>72EC0030-034E-4240-B4AB-3D6928C26B2F</code></li>
+<li><code>SERVICE_OTA</code> = <code>F7BF3564-FB6D-4E53-88A4-5E37E0326063</code></li>
+</ul>
+<h3>ZTAG_SL</h3>
+<ul>
+<li><code>UUID_SERVICE_ZTAG_CONFIG</code> = <code>B9B5CA6F-5753-4870-9BFB-45376D217623</code></li>
+<li><code>SERVICE_OTA</code> = <code>E4E37000-7A01-4507-8EFB-666B4EFC257F</code></li>
+</ul>
+<h3>Proximity</h3>
+<ul>
+<li>The exact service UUID was not surfaced in the short excerpts I reviewed, but the class exposes:<ul>
+<li>alarm threshold</li>
+<li>buzzer control</li>
+<li>buzzer frequency</li>
+<li>firmware version</li>
+<li>RSSI filter</li>
+<li>transmit power</li>
+</ul>
+</li>
+</ul>
+<h3>XIO</h3>
+<ul>
+<li><code>UUID_SERVICE_GATT_DEVICE_INFO</code> = <code>0000180A-0000-1000-8000-00805F9B34FB</code></li>
+<li><code>UUID_CHAR_GATT_FW_REV_STRING</code> = <code>00002A26-0000-1000-8000-00805F9B34FB</code></li>
+<li><code>UUID_SERVICE_XTAG_AUTH</code> = <code>591DABCC-7116-11E7-8CF7-A6006AD3DBA0</code></li>
+<li><code>UUID_SERVICE_XTAG_GENERICS_CMDS</code> = <code>4C39C376-711D-11E7-8CF7-A6006AD3DBA0</code></li>
+<li><code>UUID_SERVICE_XTAG_IP_PARAMS</code> = <code>50bcbc27-cbc5-4da3-8e12-703899d9220f</code></li>
+<li><code>UUID_CHAR_XTAG_AUTH_PSW</code> = <code>A4E48D8C-7116-11E7-8CF7-A6006AD3DBA0</code></li>
+<li><code>UUID_CHAR_XTAG_AUTH_RESULT</code> = <code>7221E968-711F-11E7-8CF7-A6006AD3DBA0</code></li>
+<li><code>UUID_CHAR_XTAG_IP_IP</code> = <code>9593d6a3-0482-456d-8c02-9791b4c5e645</code></li>
+<li><code>UUID_CHAR_XTAG_IP_SM</code> = <code>16156e4e-2e2c-473d-992b-f1fb8b7133c6</code></li>
+<li><code>UUID_CHAR_XTAG_IP_GW</code> = <code>b4ca3c71-16ae-481a-b37d-eb13e0b36589</code></li>
+<li><code>UUID_CHAR_XTAG_IP_MAC</code> = <code>411d22a0-b02e-4506-93dd-37db38bd5aa5</code></li>
+<li><code>UUID_CHAR_XTAG_IP_TID</code> = <code>70faad68-7156-11e7-8cf7-a6006ad3dba0</code></li>
+<li><code>UUID_CHAR_XTAG_IP_FW</code> = <code>3e3ab720-679d-416f-b302-396ba4b08782</code></li>
+<li><code>UUID_CHAR_XTAG_IP_DHCP</code> = <code>31f55af6-809e-4609-bbfa-a244faf5d3ad</code></li>
+<li><code>UUID_CHAR_XTAG_PARAM_SECTION</code> = <code>294bc082-3013-48a9-973c-b16db244af9b</code></li>
+<li><code>UUID_CHAR_XTAG_PARAM_KEY</code> = <code>2a705ddc-7126-11e7-8cf7-a6006ad3dba0</code></li>
+<li><code>UUID_CHAR_XTAG_PARAM_VALUE</code> = <code>5d81c800-7126-11e7-8cf7-a6006ad3dba0</code></li>
+<li><code>UUID_CHAR_XTAG_ACTION</code> = <code>2fc35d20-7121-11e7-8cf7-a6006ad3dba0</code></li>
+<li><code>UUID_CHAR_XTAG_PARAM_VALUE_DESCRIPTOR</code> = <code>00002902-0000-1000-8000-00805f9b34fb</code></li>
+</ul>
+<h2>Key methods seen in the dex</h2>
+<h3><code>Ble_Scan</code></h3>
+<ul>
+<li><code>ScanBLE_Scan(...)</code></li>
+<li><code>startScanLocal(...)</code></li>
+<li><code>stopScanner()</code></li>
+<li><code>connectToZTag()</code></li>
+<li><code>connectToZTagSL()</code></li>
+<li><code>connectToTagR()</code></li>
+<li><code>connectToZTagProximity()</code></li>
+<li><code>connectToXIO(...)</code></li>
+</ul>
+<h3><code>Ble_Gatt</code></h3>
+<ul>
+<li><code>connectToDevice(...)</code></li>
+<li><code>disconnectDevice()</code></li>
+<li><code>discoverServices()</code></li>
+<li><code>requestCharacteristics(...)</code></li>
+<li><code>writeAllChars(...)</code></li>
+<li><code>writeStringCharInAck(...)</code></li>
+<li><code>isTagConnected()</code></li>
+</ul>
+<h3><code>Ble_OTA_Update</code></h3>
+<ul>
+<li><code>startFirmwareUpdate()</code></li>
+<li><code>updateFirmware(File)</code></li>
+<li><code>sendNextPacket()</code></li>
+<li><code>createTempFile(BufferedSource)</code></li>
+</ul>
+<h3><code>BLE_Gatt_XIO</code></h3>
+<ul>
+<li><code>XIO_connectToDevice(...)</code></li>
+<li><code>XIO_disconnectDevice()</code></li>
+<li><code>XIO_WriteIPParams()</code></li>
+<li><code>setCharacteristicNotification2()</code></li>
+<li><code>delayedRead()</code></li>
+</ul>
+<h2>Protocol structure inferred from strings</h2>
+<p>The app contains named services/characteristics for:</p>
+<ul>
+<li><p>Services:</p>
+<ul>
+<li><code>UUID_SERVICE_GATT_DEVICE_INFO</code></li>
+<li><code>UUID_SERVICE_ZTAG_CONFIG</code></li>
+<li><code>UUID_SERVICE_TAGR_CONFIG</code></li>
+<li><code>UUID_SERVICE_XTAG_AUTH</code></li>
+<li><code>UUID_SERVICE_XTAG_GENERICS_CMDS</code></li>
+<li><code>UUID_SERVICE_XTAG_IP_PARAMS</code></li>
+</ul>
+</li>
+<li><p>Characteristics:</p>
+<ul>
+<li><code>UUID_CHARS_CONNECT_CONTROL</code></li>
+<li><code>UUID_CHARS_FW_VERSION</code></li>
+<li><code>UUID_CHARS_TX_POWER</code></li>
+<li><code>UUID_CHARS_LED_CONTROL</code></li>
+<li><code>UUID_CHARS_BUZZER_CONTROL</code></li>
+<li><code>UUID_CHARS_FAST_ADV_MSEC</code></li>
+<li><code>UUID_CHARS_FAST_BLINK_MSEC</code></li>
+<li><code>UUID_CHARS_SLOW_ADV_MSEC</code></li>
+<li><code>UUID_CHARS_SLOW_BLINK_MSEC</code></li>
+<li><code>UUID_CHARS_AUTO_DISC_COUNT</code></li>
+<li><code>UUID_CHARS_ALARM_THRESHOLD</code></li>
+<li><code>UUID_CHARS_RSSI_FILTER</code></li>
+<li><code>UUID_CHARS_MOTION_CONTROL</code></li>
+<li><code>UUID_CHAR_GATT_FW_REV_STRING</code></li>
+<li><code>UUID_CHAR_XTAG_ACTION</code></li>
+<li><code>UUID_CHAR_XTAG_AUTH_PSW</code></li>
+<li><code>UUID_CHAR_XTAG_AUTH_RESULT</code></li>
+<li><code>UUID_CHAR_XTAG_IP_DHCP</code></li>
+<li><code>UUID_CHAR_XTAG_IP_FW</code></li>
+<li><code>UUID_CHAR_XTAG_IP_GW</code></li>
+<li><code>UUID_CHAR_XTAG_IP_IP</code></li>
+<li><code>UUID_CHAR_XTAG_IP_MAC</code></li>
+<li><code>UUID_CHAR_XTAG_IP_SM</code></li>
+<li><code>UUID_CHAR_XTAG_IP_TID</code></li>
+<li><code>UUID_CHAR_XTAG_PARAM_KEY</code></li>
+<li><code>UUID_CHAR_XTAG_PARAM_SECTION</code></li>
+<li><code>UUID_CHAR_XTAG_PARAM_VALUE</code></li>
+</ul>
+</li>
+</ul>
+<h2>Reverse of the BLE flow</h2>
+<h3>Generic tags</h3>
+<ul>
+<li><code>Ble_Scan</code> selects a device family from the scan list, then dispatches to a family-specific connect method.</li>
+<li><code>Ble_Gatt</code> and the family variants call <code>connectGatt(...)</code>, wait for <code>STATE_CONNECTED</code>, then call <code>discoverServices()</code>.</li>
+<li><code>onServicesDiscovered</code> checks the target service UUID and either:<ul>
+<li>reads config characteristics, or</li>
+<li>switches into OTA mode and starts packet upload.</li>
+</ul>
+</li>
+</ul>
+<h3>Read/write model</h3>
+<ul>
+<li>The app reads all readable characteristics first, maps them into the corresponding <code>Class_*</code> object, then writes modified values back.</li>
+<li><code>writeAllChars(...)</code> is used to push config values after readback.</li>
+<li>Writes are serialized one characteristic at a time and chained by the GATT callbacks.</li>
+</ul>
+<h3>OTA model</h3>
+<ul>
+<li>OTA is chunked into 16-byte packets.</li>
+<li>The app reads <code>R.raw.tag06</code>, copies it into a temp file, then streams it through <code>Ble_OTA_Update</code>.</li>
+<li>Each successful characteristic write triggers <code>sendNextPacket()</code>.</li>
+<li>End-of-file is signaled by sending a single control byte <code>{3}</code> to <code>CHARACTERISTIC_CONTROL_NO_ACK</code>.</li>
+</ul>
+<h3>XIO model</h3>
+<ul>
+<li>XIO uses a different workflow:<ul>
+<li>connect with a password</li>
+<li>read firmware version</li>
+<li>read IP, subnet, gateway, MAC, terminal ID, and DHCP</li>
+<li>use a <code>GETPAR</code> action pattern against <code>UUID_CHAR_XTAG_PARAM_SECTION</code>, <code>UUID_CHAR_XTAG_PARAM_KEY</code>, and <code>UUID_CHAR_XTAG_PARAM_VALUE</code></li>
+</ul>
+</li>
+<li>The source explicitly handles <code>Wifi</code>, <code>Ethernet</code>, and <code>System</code> sections.</li>
+</ul>
+<h2>What this suggests about BLE Tag 2</h2>
+<ul>
+<li>The device is almost certainly managed through a proprietary GATT profile.</li>
+<li>The app seems to:<ul>
+<li>scan for nearby tags</li>
+<li>classify them by family</li>
+<li>connect with a family-specific GATT handler</li>
+<li>discover services</li>
+<li>read/write a set of config characteristics</li>
+<li>optionally push firmware via OTA</li>
+</ul>
+</li>
+<li>The presence of <code>connectControl</code>, <code>tx power</code>, <code>LED</code>, <code>buzzer</code>, <code>motion</code>, <code>RSSI filter</code>, <code>auto discovery</code>, and <code>alarm threshold</code> strongly suggests the tag exposes:<ul>
+<li>proximity/range tuning</li>
+<li>beaconing/advertising control</li>
+<li>alerting features</li>
+<li>firmware revision reporting</li>
+</ul>
+</li>
+</ul>
+<h2>Practical parameter map</h2>
+<h3>ZTAG / ZTAG-SL</h3>
+<ul>
+<li><code>fastAdvMsec</code><ul>
+<li>range seen in UI: <code>100..10000</code> ms, step <code>50</code></li>
+<li>default: <code>200</code></li>
+</ul>
+</li>
+<li><code>slowAdvMsec</code><ul>
+<li>range seen in UI: <code>1000..30000</code> ms, step <code>1000</code></li>
+<li>default: <code>2000</code></li>
+</ul>
+</li>
+<li><code>autoDisconnectTimerCount</code><ul>
+<li>UI shows minutes, values start at <code>1</code></li>
+<li>default: <code>3</code></li>
+</ul>
+</li>
+<li><code>txPower</code><ul>
+<li>UI uses 1-based values</li>
+<li>default: <code>14</code></li>
+</ul>
+</li>
+<li><code>ledControl</code><ul>
+<li>small integer flag, default <code>0</code></li>
+</ul>
+</li>
+<li><code>motionControl</code><ul>
+<li>boolean-like flag, default <code>1</code></li>
+</ul>
+</li>
+<li><code>connectControl</code><ul>
+<li>boolean-like flag, default <code>1</code></li>
+</ul>
+</li>
+</ul>
+<h3>TAG_R</h3>
+<ul>
+<li>Shares the same base config service UUID as ZTAG/ZTAG-SL.</li>
+<li>Adds these fields:<ul>
+<li><code>dw_txPower</code></li>
+<li><code>dw_fast_blink</code></li>
+<li><code>dw_slow_blink</code></li>
+<li><code>alarmThreshold</code></li>
+<li><code>buzzerControl</code></li>
+</ul>
+</li>
+<li>Default values seen in the UI:<ul>
+<li><code>txPower = 7</code></li>
+<li><code>dw_txPower = 9</code></li>
+<li><code>dw_fast_blink = 500</code></li>
+<li><code>dw_slow_blink = 10000</code></li>
+<li><code>buzzerControl = 12</code></li>
+</ul>
+</li>
+<li><code>alarmThreshold</code><ul>
+<li>validated in UI to <code>30..800</code></li>
+<li>default used when invalid: <code>150</code></li>
+</ul>
+</li>
+<li><code>buzzerControl</code><ul>
+<li>treated as a bitmask</li>
+<li>observed combinations:<ul>
+<li><code>4</code></li>
+<li><code>8</code></li>
+<li><code>12</code></li>
+</ul>
+</li>
+<li>the UI bit behavior implies separate enable flags for buzzer/vibration-style alerts</li>
+</ul>
+</li>
+</ul>
+<h3>Proximity</h3>
+<ul>
+<li>The service UUID used by the client matches the TAG_R config service UUID, but the characteristic set is different.</li>
+<li>Fields exposed:<ul>
+<li><code>alarmThreshold</code></li>
+<li><code>trasmitPower</code></li>
+<li><code>buzzerControl</code></li>
+<li><code>buzzerFrequency</code></li>
+<li><code>rssiFilter</code></li>
+</ul>
+</li>
+<li>UI mappings:<ul>
+<li><code>alarmThreshold</code> uses <code>45..800</code> in steps of <code>5</code></li>
+<li><code>trasmitPower</code> is a 1-based scale</li>
+<li><code>buzzerFrequency</code> is a stepped scale starting around <code>6 Hz</code></li>
+<li><code>rssiFilter</code> is a direct integer</li>
+<li><code>buzzerControl</code> is a 4-bit mask</li>
+</ul>
+</li>
+<li>Default values:<ul>
+<li><code>alarmThreshold = 55</code></li>
+<li><code>trasmitPower = 7</code></li>
+<li><code>rssiFilter = 6</code></li>
+<li><code>buzzerFrequency = 12</code></li>
+<li><code>buzzerControl = 12</code></li>
+</ul>
+</li>
+</ul>
+<h2>Scan / identification</h2>
+<ul>
+<li><code>Ble_Scan</code> keeps a 5-minute scan window.</li>
+<li>The decompiled scan callback is partially elided by JADX, but the surrounding code shows it builds <code>Class_Device</code> entries and later dispatches to the family-specific connect method.</li>
+<li>The scanner does not rely only on the MAC address:<ul>
+<li>it rebuilds the device object from scan results</li>
+<li>it uses parsed advertisement data</li>
+<li>it classifies the device into <code>BLE_TYPE</code></li>
+</ul>
+</li>
+</ul>
+<h2>Emulation notes</h2>
+<ul>
+<li>For a compatible client, the key behaviors to preserve are:<ul>
+<li>connect with GATT</li>
+<li>discover services</li>
+<li>read all readable config characteristics first</li>
+<li>write them back one by one</li>
+<li>if OTA is requested, switch to the OTA service and stream 16-byte chunks</li>
+</ul>
+</li>
+<li>The OTA control flow is sensitive to write ordering:<ul>
+<li>the app sends the next packet only after the previous write callback succeeds</li>
+<li>the end marker is a single byte <code>{3}</code></li>
+</ul>
+</li>
+</ul>
+<h2>Payload structure</h2>
+<h3>Advertising payload</h3>
+<ul>
+<li>The scan parser is a standard BLE AD-structure TLV parser.</li>
+<li>Supported AD types in the app:<ul>
+<li>flags (<code>0x01</code>)</li>
+<li>short/complete local name (<code>0x08</code>, <code>0x09</code>)</li>
+<li>16/32/128-bit service UUID lists (<code>0x02</code>-<code>0x07</code>)</li>
+<li>service data (<code>0x16</code>)</li>
+<li>manufacturer specific data (<code>0xFF</code>)</li>
+<li>TX power (<code>0x0A</code>)</li>
+</ul>
+</li>
+<li>So the on-air advertising packet is not a custom flat blob; it is a normal BLE advertisement composed of standard length/type/value blocks.</li>
+<li>From <code>Ble_Scan.onScanResult(...)</code>, the app pulls:<ul>
+<li>device name from <code>ScanRecord</code></li>
+<li>manufacturer-specific data, first entry in the sparse array</li>
+<li>RSSI from the scan result</li>
+</ul>
+</li>
+<li>The manufacturer payload is interpreted like this:<ul>
+<li><code>byte 0</code> = button press counter byte</li>
+<li><code>byte 1</code> = battery percentage byte</li>
+<li><code>byte 2</code> = fast polling indicator</li>
+<li>for longer payloads on some families:<ul>
+<li><code>bytes 3..4</code> = <code>upTimeFast</code> little-endian</li>
+<li><code>bytes 5..6</code> = <code>upTimeSlow</code> little-endian</li>
+<li><code>bytes 7..8</code> = connection counter little-endian</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Family-specific behavior:<ul>
+<li><code>BLE Tag2</code> and related <code>ZTAG_SL</code> devices use the first 3 bytes for the common fields above, then may append timing/counter fields in longer manufacturer data</li>
+<li><code>BLE TagP</code> does not use the same long layout and is handled separately</li>
+<li><code>BLE TagR</code> uses the same first 3 bytes plus the extended timing/counter fields when present</li>
+</ul>
+</li>
+<li>So the advertising packet is effectively:<ul>
+<li>standard BLE AD header fields</li>
+<li>one manufacturer-specific record carrying status/state bytes</li>
+<li>optional service UUIDs / service data / name strings</li>
+</ul>
+</li>
+</ul>
+<h3>GATT config payload</h3>
+<ul>
+<li>Most writable characteristics are numeric scalars, sent through <code>BluetoothGattCharacteristic.setValue(...)</code>.</li>
+<li>The code clearly uses 1-byte and 2-byte GATT integer encodings.</li>
+<li>Fast/slow advertising periods are written as 16-bit values.</li>
+<li>Flags such as LED, motion, connect control, buzzer control, RSSI filter, and transmit power are generally treated as small integers.</li>
+<li>The proximity <code>alarmThreshold</code> looks like a wider numeric field because the UI allows values up to <code>800</code>; that is likely encoded as a 2-byte little-endian value even though the decompiler does not show the branch cleanly.</li>
+<li>OTA is separate from config and uses raw 16-byte chunks plus a final control byte <code>0x03</code>.</li>
+</ul>
+<h3>Practical packet shape</h3>
+<ul>
+<li>For a BLE Tag 2-style scan record, the app appears to expect at minimum:<ul>
+<li><code>name</code> as the human-readable identifier</li>
+<li>manufacturer data length <code>&gt;= 3</code></li>
+</ul>
+</li>
+<li>When the manufacturer data length is <code>&gt;= 8</code>, it reads:<ul>
+<li><code>button press counter</code></li>
+<li><code>battery percentage</code></li>
+<li><code>fast polling</code></li>
+<li><code>upTimeFast</code></li>
+<li><code>upTimeSlow</code></li>
+<li><code>connection counter</code></li>
+</ul>
+</li>
+<li>This is the most concrete payload structure recovered from the scan path.</li>
+</ul>
+<h3>Manufacturer data table</h3>
+<table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Size</th>
+<th>Meaning</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>0</code></td>
+<td>1 byte</td>
+<td>Button press counter</td>
+<td>Read as an unsigned-ish button counter</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>1 byte</td>
+<td>Battery percentage</td>
+<td>Commonly seen as <code>100</code> in the observed data</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>1 byte</td>
+<td>Fast polling</td>
+<td>Copied into <code>fastPolling</code></td>
+</tr>
+<tr>
+<td><code>3..4</code></td>
+<td>2 bytes</td>
+<td><code>upTimeFast</code></td>
+<td>Little-endian</td>
+</tr>
+<tr>
+<td><code>5..6</code></td>
+<td>2 bytes</td>
+<td><code>upTimeSlow</code></td>
+<td>Little-endian</td>
+</tr>
+<tr>
+<td><code>7..8</code></td>
+<td>2 bytes</td>
+<td><code>connectionCounter</code></td>
+<td>Little-endian</td>
+</tr>
+</tbody></table>
+<ul>
+<li>The scanner code does <strong>not</strong> read offset <code>9</code>.</li>
+<li>The length guard in the decompiled code is slightly loose:<ul>
+<li>it checks <code>length &lt; 8</code></li>
+<li>but later reads index <code>8</code></li>
+<li>so in practice the payload must be at least <code>9</code> bytes long for the extended fields to be safe</li>
+</ul>
+</li>
+<li>For <code>BLE TagP</code>, the code does not use the same extended layout.</li>
+<li>If the full manufacturer payload is 10 bytes, that means:<ul>
+<li>bytes <code>0..8</code> are the decoded fields above</li>
+<li>byte <code>9</code> exists on the air but is not used by the recovered scan code</li>
+<li>that last byte is therefore likely reserved, a checksum, or a family-specific flag that this app version ignores</li>
+</ul>
+</li>
+</ul>
+<h3>Sample payloads</h3>
+<ul>
+<li>Example 1:<ul>
+<li><code>00 61 01 62 00 4b 03 00 00 00</code></li>
+<li>button press counter = <code>0</code></li>
+<li>battery = <code>0x61</code> = <code>97</code></li>
+<li>fast polling = <code>1</code></li>
+<li><code>upTimeFast</code> = <code>0x0062</code> = <code>98</code></li>
+<li><code>upTimeSlow</code> = <code>0x034b</code> = <code>843</code></li>
+<li><code>connectionCounter</code> = <code>0</code></li>
+<li>byte <code>9</code> = <code>0</code></li>
+</ul>
+</li>
+<li>Example 2:<ul>
+<li><code>01 64 01 00 00 00 00 00 00 01</code></li>
+<li>button press counter = <code>1</code></li>
+<li>battery = <code>0x64</code> = <code>100</code></li>
+<li>fast polling = <code>1</code></li>
+<li><code>upTimeFast</code> = <code>0</code></li>
+<li><code>upTimeSlow</code> = <code>0</code></li>
+<li><code>connectionCounter</code> = <code>0</code></li>
+<li>byte <code>9</code> = <code>1</code></li>
+</ul>
+</li>
+<li>The examples fit the recovered layout well.</li>
+<li>Byte <code>9</code> looks more like a small state flag than a checksum, but the app version I decompiled does not decode it, so that remains an inference.</li>
+<li>Your sniffing observation refines that inference:<ul>
+<li>when the first-byte button counter increments, byte <code>9</code> often flips to <code>1</code></li>
+<li>but there are also cases with <code>buttonPressCounter &gt; 0</code> and byte <code>9 = 0</code></li>
+<li>those cases happened while the tag was in slow mode</li>
+</ul>
+</li>
+<li>The best current hypothesis is that byte <code>9</code> is a mode/state flag, not the press counter itself.</li>
+<li>A plausible interpretation is:<ul>
+<li><code>0</code> = slow/inactive state</li>
+<li><code>1</code> = fast/active/event state</li>
+</ul>
+</li>
+<li>That would fit the observation that button activity changes can force <code>1</code>, while slow mode can keep it at <code>0</code> even if the first-byte counter is already non-zero.</li>
+<li>This remains an inference from field behavior, not something explicitly decoded in the app sources.</li>
+</ul>
+<h3>Working state matrix</h3>
+<table>
+<thead>
+<tr>
+<th>Observed mode</th>
+<th>Button counter</th>
+<th>Byte 9</th>
+<th>Working interpretation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fast</td>
+<td>0</td>
+<td>0 or 1</td>
+<td>Idle vs active fast-state may differ by moment of capture</td>
+</tr>
+<tr>
+<td>Fast</td>
+<td>&gt; 0</td>
+<td>1</td>
+<td>Press/event state appears asserted</td>
+</tr>
+<tr>
+<td>Slow</td>
+<td>0</td>
+<td>0</td>
+<td>Inactive / slow-state</td>
+</tr>
+<tr>
+<td>Slow</td>
+<td>&gt; 0</td>
+<td>0</td>
+<td>Counter can stay non-zero while the mode flag stays low</td>
+</tr>
+</tbody></table>
+<ul>
+<li>The table above is a working hypothesis, not a verified spec.</li>
+<li>The most likely meaning of byte <code>9</code> is therefore a <strong>mode/event latch</strong> rather than a pure history counter.</li>
+<li>This also matches the app-side behavior where <code>buttonPressed</code> is latched in the model when the first byte changes, but the scan code itself only stores the raw first-byte field.</li>
+</ul>
+<h3>Evidence from the app</h3>
+<ul>
+<li>The scan parser stores <code>byte 0</code> as the first status byte, <code>byte 1</code> as the second status byte, and <code>byte 2</code> as <code>fastPolling</code>.</li>
+<li>The model keeps a dedicated boolean latch:<ul>
+<li><code>Class_Device.setButtonPression(int i)</code> sets <code>buttonPressed = true</code> when the first byte changes</li>
+<li><code>Class_Device.isButtonPressed()</code> returns <code>true</code> once and then clears the latch</li>
+</ul>
+</li>
+<li>The list refresh logic uses that latch to highlight the item:<ul>
+<li>if <code>isButtonPressed()</code> is true, the UI colors the row</li>
+</ul>
+</li>
+<li>That means the app distinguishes:<ul>
+<li>raw first-byte button counter</li>
+<li>a transient event latch</li>
+<li>fast/slow polling state</li>
+</ul>
+</li>
+<li>Your observation that byte <code>9</code> can be <code>1</code> when the press counter changes, but remain <code>0</code> in slow mode, is consistent with byte <code>9</code> being a separate state flag rather than the counter itself.</li>
+<li>The app does not explicitly decode byte <code>9</code>, so this is still a field-behavior inference, but it is strongly supported by the separation of the first-byte button counter, <code>buttonPressed</code>, and <code>fastPolling</code> in the model.</li>
+<li>There is no app-side timer that clears byte <code>9</code>.<ul>
+<li><code>MyListFragment</code> refreshes the UI on a 1-second countdown, but that only redraws the list</li>
+<li><code>Ble_Scan</code> updates model fields from advertisements, but never writes byte <code>9</code></li>
+<li><code>Class_Device</code> only implements a UI latch for button changes, not an advertising reset timer</li>
+<li>repository-wide searches for <code>18000</code>, <code>postDelayed</code>, <code>CountDownTimer</code>, and similar timeout logic did not surface any code path that clears or rewrites the advertiser payload</li>
+<li>the only timer-like behavior tied to the scan UI is the 1-second <code>CountDownTimer</code> used to refresh the list view, not to alter radio state</li>
+<li>the <code>Z_TAG_SL</code> profile does expose <code>slowAdvMsec</code>, <code>autoDisconnectTimerCount</code>, <code>dw_fast_blink</code>, and <code>dw_slow_blink</code>, but those are config fields for the tag, not a decoder for byte <code>9</code></li>
+<li>in the decompiled app, byte <code>9</code> is not mapped onto any named config characteristic or model field</li>
+</ul>
+</li>
+<li>Live sniffing observed on a real <code>BLE Tag2</code>:<ul>
+<li><code>00:38:18.877</code> -&gt; <code>03 64 01 0a 00 5f 00 00 00 01</code></li>
+<li><code>00:38:36.959</code> -&gt; <code>03 64 01 0a 00 5f 00 00 00 00</code></li>
+<li>In that trace, byte <code>9</code> returned to <code>0</code> after roughly <code>18</code> seconds.</li>
+</ul>
+</li>
+<li>A second filtered live trace confirmed the same behavior with a tighter window:<ul>
+<li><code>00:43:19.183</code> -&gt; <code>04 64 01 0a 00 5f 00 00 00 01</code></li>
+<li><code>00:43:29.045</code> -&gt; <code>04 64 01 0a 00 5f 00 00 00 00</code></li>
+<li>In that trace, byte <code>9</code> stayed high for about <code>9.862</code> seconds before clearing.</li>
+</ul>
+</li>
+<li>A third filtered trace showed the same latch behavior while holding the middle fields steady:<ul>
+<li><code>00:45:56.329</code> -&gt; <code>05 64 01 0a 00 5f 00 00 00 01</code></li>
+<li><code>00:46:04.127</code> -&gt; <code>05 64 01 0a 00 5f 00 00 00 00</code></li>
+<li>In that trace, byte <code>9</code> cleared after about <code>7.799</code> seconds even though <code>b1=100</code>, <code>b2=1</code>, and <code>b3=10</code> stayed unchanged.</li>
+</ul>
+</li>
+<li>In the button-correlation trace, the first observed active frame after the press was:<ul>
+<li><code>00:47:21.340</code> -&gt; <code>06 64 01 0a 00 5f 00 00 00 01</code></li>
+<li>Here <code>b0</code> incremented from <code>5</code> to <code>6</code> and <code>b9</code> flipped from <code>0</code> to <code>1</code> within <code>0.380</code> seconds of the previous frame.</li>
+</ul>
+</li>
+<li>The same trace then showed <code>b9</code> returning to <code>0</code> after about <code>9.588</code> seconds while <code>b0=6</code>, <code>b1=100</code>, <code>b2=1</code>, and <code>b3=10</code> remained stable.</li>
+<li>So the reset is most likely firmware-side, not app-side, and the timing appears to be linked to the tag&#39;s own state machine/slow-mode transition.</li>
+</ul>
+<h3>Final interpretation table</h3>
+<table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Meaning</th>
+<th>Confidence</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>0</code></td>
+<td>Button press counter</td>
+<td>High</td>
+<td>Changes across traces and correlates with active/event transitions</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Battery percentage</td>
+<td>High</td>
+<td>Commonly seen as <code>100</code> in the observed data</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Fast polling flag</td>
+<td>High</td>
+<td>The app maps it to <code>fastPolling</code></td>
+</tr>
+<tr>
+<td><code>3..4</code></td>
+<td><code>upTimeFast</code></td>
+<td>High</td>
+<td>Little-endian, only when extended payload is present</td>
+</tr>
+<tr>
+<td><code>5..6</code></td>
+<td><code>upTimeSlow</code></td>
+<td>High</td>
+<td>Little-endian, only when extended payload is present</td>
+</tr>
+<tr>
+<td><code>7..8</code></td>
+<td><code>connectionCounter</code></td>
+<td>High</td>
+<td>Little-endian, only when extended payload is present</td>
+</tr>
+<tr>
+<td><code>9</code></td>
+<td>Mode / event latch</td>
+<td>Medium-high</td>
+<td>Observed to flip <code>0 -&gt; 1</code> on press-related transitions and return to <code>0</code> after about <code>8-10 s</code> in the traces captured here</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Practical reading for <code>BLE Tag2</code>:<ul>
+<li><code>byte 0</code> is the button press counter the app appears to expose in live traces</li>
+<li><code>byte 1</code> is the battery percentage the app appears to expose in live traces</li>
+<li><code>byte 2</code> is the fast/slow polling indicator the app exposes</li>
+<li><code>byte 9</code> is an additional firmware-side latch that the app ignores</li>
+</ul>
+</li>
+<li>Current best hypothesis:<ul>
+<li><code>byte 9 = 1</code> when the tag is in a transient active/event window</li>
+<li><code>byte 9 = 0</code> once the firmware settles back to its slow/inactive window</li>
+</ul>
+</li>
+<li>Still open:<ul>
+<li>exact semantics of <code>byte 0</code></li>
+<li>whether the <code>8-10 s</code> decay window is fixed or depends on tag configuration / firmware build</li>
+</ul>
+</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>This analysis is from the decompiled Java sources generated by <code>jadx</code>, plus a few earlier string-table passes.</li>
+<li>The reverse is already enough to map the BLE Tag 2 family into a proprietary GATT config protocol with OTA support.</li>
+<li>Remaining unknowns are mostly the exact per-characteristic payload formats and the advertisement parsing heuristics in the scanner.</li>
+</ul>
+
+      <a class="back-index" href="index.html">Index</a>
+    </article>
+  </main>
+</body>
+</html>

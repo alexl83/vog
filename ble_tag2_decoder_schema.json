@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/ble-tag2-decoder.schema.json",
+  "title": "BLE Tag2 Parsed Advertisement",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "payload_hex",
+    "buttonPressCounter",
+    "batteryPercent",
+    "fastPolling",
+    "upTimeFast",
+    "upTimeSlow",
+    "connectionCounter",
+    "modeLatch"
+  ],
+  "properties": {
+    "payload_hex": {
+      "type": "string",
+      "description": "Manufacturer payload as space-separated hex bytes."
+    },
+    "buttonPressCounter": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255,
+      "description": "Observed button press counter byte."
+    },
+    "batteryPercent": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255,
+      "description": "Observed battery percentage byte."
+    },
+    "fastPolling": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255,
+      "description": "Fast/slow polling flag."
+    },
+    "upTimeFast": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "Little-endian uptime/counter field."
+    },
+    "upTimeSlow": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "Little-endian uptime/counter field."
+    },
+    "connectionCounter": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 65535,
+      "description": "Little-endian connection/event counter."
+    },
+    "modeLatch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255,
+      "description": "Firmware-side mode/event latch; observed to decay back to 0 after about 8-10 seconds."
+    }
+  }
+}

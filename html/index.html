@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BLE Tag2 Docs Index</title>
+  <style>
+  :root {
+    color-scheme: light;
+    --bg: #eef4fb;
+    --panel: #ffffff;
+    --panel-soft: #f7fbff;
+    --ink: #10253a;
+    --muted: #52657b;
+    --line: #d4dfec;
+    --accent: #0b4f8a;
+    --accent-2: #1672b8;
+    --accent-soft: #eaf4ff;
+    --shadow: 0 16px 40px rgba(16, 37, 58, 0.08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(126, 193, 255, 0.20), transparent 28%),
+      radial-gradient(circle at 85% 10%, rgba(11, 79, 138, 0.08), transparent 25%),
+      linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    color: var(--ink);
+  }
+  main {
+    max-width: 1040px;
+    margin: 36px auto 56px;
+    padding: 0 24px 48px;
+  }
+  header {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0)),
+      linear-gradient(135deg, #071b2f, #0b4f8a 65%, #1672b8);
+    color: white;
+    border-radius: 24px;
+    padding: 30px 32px 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 28%);
+    pointer-events: none;
+  }
+  main > header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 2.8vw, 2.65rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+    position: relative;
+    z-index: 1;
+  }
+  header p {
+    margin: 12px 0 0;
+    color: rgba(255,255,255,0.88);
+    max-width: 78ch;
+    font-size: 1rem;
+    line-height: 1.65;
+    position: relative;
+    z-index: 1;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin-top: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .chip {
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 999px;
+    padding: 5px 11px;
+    background: rgba(255,255,255,0.07);
+    font-size: 0.88rem;
+    letter-spacing: 0.01em;
+  }
+  a.chip {
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  a.chip:hover {
+    background: rgba(255,255,255,0.13);
+    text-decoration: none;
+  }
+  .chip strong { font-weight: 700; }
+  article {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 30px 34px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .page-title {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 22px;
+  }
+  .page-title h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .intro {
+    margin: 0 0 8px;
+    color: var(--muted);
+  }
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .doc-card {
+    display: block;
+    background: linear-gradient(180deg, #ffffff, var(--panel-soft));
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 18px 17px;
+    box-shadow: 0 8px 22px rgba(16, 37, 58, 0.05);
+    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    text-decoration: none;
+  }
+  .doc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(16, 37, 58, 0.09);
+    border-color: #a9c6e3;
+    text-decoration: none;
+  }
+  .doc-card .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-2);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .doc-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.03rem;
+    line-height: 1.28;
+    color: #1d3d61;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .doc-card p {
+    margin: 0;
+    color: #5f7288;
+    font-size: 0.93rem;
+    line-height: 1.58;
+  }
+  .doc-card .path {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: #6b8096;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    word-break: break-all;
+  }
+  h1, h2, h3, h4 {
+    color: #153a63;
+    line-height: 1.15;
+    scroll-margin-top: 24px;
+  }
+  h1 { font-size: 1.78rem; margin: 0 0 1rem; letter-spacing: -0.02em; }
+  h2 { font-size: 1.5rem; margin: 2.1rem 0 0.9rem; letter-spacing: -0.015em; }
+  h3 { font-size: 1.12rem; margin: 1.45rem 0 0.6rem; }
+  p, li {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+  p, ul, ol, table, pre, blockquote {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; text-underline-offset: 0.15em; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.92em;
+    background: var(--accent-soft);
+    color: #0d3d69;
+    padding: 0.14rem 0.34rem;
+    border-radius: 6px;
+  }
+  pre {
+    overflow: auto;
+    background: linear-gradient(180deg, #0f172a, #102846);
+    color: #e2e8f0;
+    padding: 18px 20px;
+    border-radius: 18px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.88rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid #b9cbe0;
+    background: white;
+  }
+  th, td {
+    border-bottom: 1px solid #d7e2ee;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: linear-gradient(180deg, #0c568f, #0a4578);
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  tr:nth-child(even) td { background: #f8fbff; }
+  td:first-child, th:first-child { border-left: 0; }
+  td:last-child, th:last-child { border-right: 0; }
+  table code {
+    background: transparent;
+    color: #143252;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.94em;
+    font-weight: 600;
+  }
+  blockquote {
+    border-left: 4px solid #8cc7e8;
+    background: #f4fbff;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+    color: #24435f;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 1.5rem 0;
+  }
+  .doc-source {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    color: #6b8096;
+    font-size: 0.82rem;
+    margin-top: 10px;
+  }
+  .back-index {
+    position: absolute;
+    right: 34px;
+    bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(11, 79, 138, 0.08);
+    border: 1px solid rgba(11, 79, 138, 0.18);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .back-index:hover {
+    background: rgba(11, 79, 138, 0.12);
+    text-decoration: none;
+  }
+  @media (max-width: 760px) {
+    main { margin: 20px auto 32px; padding: 0 14px 28px; }
+    header, article { border-radius: 20px; padding: 22px 18px; }
+    .doc-grid { grid-template-columns: 1fr; }
+    .back-index {
+      position: static;
+      margin-top: 16px;
+      width: fit-content;
+    }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>BLE Tag2 Documentation Hub</h1>
+      <p>Collected HTML renderings of the BLE Tag2 reverse-engineering notes, with the same blue editorial theme used in the PDF deliverables.</p>
+    </header>
+    <article>
+      <div class="page-title">
+        <div>
+          <h2>Available documents</h2>
+          <p class="intro">Pick the document you want to open. Each card links to the rendered HTML version.</p>
+        </div>
+      </div>
+      <section class="doc-grid">
+        
+          <a class="doc-card" href="ble_tag2_decoder_spec.html">
+            <div class="kicker">Decoder Spec</div>
+            <h3>BLE Tag2 Decoder Spec</h3>
+            <p>Field map and parsing rules for the BLE Tag2 manufacturer payload.</p>
+            <div class="path">../ble_tag2_decoder_spec.md</div>
+          </a>
+
+          <a class="doc-card" href="BLE_TAG2_TECHNICAL_README.html">
+            <div class="kicker">Technical README</div>
+            <h3>BLE Tag2 Reverse Engineering Summary</h3>
+            <p>Compact reverse-engineering summary with app-side evidence and interpretation.</p>
+            <div class="path">../BLE_TAG2_TECHNICAL_README.md</div>
+          </a>
+
+          <a class="doc-card" href="ble_tag2_decoder_table.html">
+            <div class="kicker">Payload Table</div>
+            <h3>BLE Tag2 Payload Table</h3>
+            <p>Readable table version of the payload layout and per-field meaning.</p>
+            <div class="path">../ble_tag2_decoder_table.md</div>
+          </a>
+
+          <a class="doc-card" href="cable_ble_tag2_reverse_notes.html">
+            <div class="kicker">Reverse Notes</div>
+            <h3>caBLE 4.9 Reverse Notes</h3>
+            <p>Long-form notes with trace evidence, hypotheses, and implementation context.</p>
+            <div class="path">../cable_ble_tag2_reverse_notes.md</div>
+          </a>
+      </section>
+    </article>
+  </main>
+</body>
+</html>

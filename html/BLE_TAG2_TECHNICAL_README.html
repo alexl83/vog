@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BLE Tag2 Reverse Engineering Summary</title>
+  <style>
+  :root {
+    color-scheme: light;
+    --bg: #eef4fb;
+    --panel: #ffffff;
+    --panel-soft: #f7fbff;
+    --ink: #10253a;
+    --muted: #52657b;
+    --line: #d4dfec;
+    --accent: #0b4f8a;
+    --accent-2: #1672b8;
+    --accent-soft: #eaf4ff;
+    --shadow: 0 16px 40px rgba(16, 37, 58, 0.08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(126, 193, 255, 0.20), transparent 28%),
+      radial-gradient(circle at 85% 10%, rgba(11, 79, 138, 0.08), transparent 25%),
+      linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    color: var(--ink);
+  }
+  main {
+    max-width: 1040px;
+    margin: 36px auto 56px;
+    padding: 0 24px 48px;
+  }
+  header {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0)),
+      linear-gradient(135deg, #071b2f, #0b4f8a 65%, #1672b8);
+    color: white;
+    border-radius: 24px;
+    padding: 30px 32px 28px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.16), transparent 28%);
+    pointer-events: none;
+  }
+  main > header h1 {
+    margin: 0;
+    font-size: clamp(2rem, 2.8vw, 2.65rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+    position: relative;
+    z-index: 1;
+  }
+  header p {
+    margin: 12px 0 0;
+    color: rgba(255,255,255,0.88);
+    max-width: 78ch;
+    font-size: 1rem;
+    line-height: 1.65;
+    position: relative;
+    z-index: 1;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 12px;
+    margin-top: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .chip {
+    border: 1px solid rgba(255,255,255,0.20);
+    border-radius: 999px;
+    padding: 5px 11px;
+    background: rgba(255,255,255,0.07);
+    font-size: 0.88rem;
+    letter-spacing: 0.01em;
+  }
+  a.chip {
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  a.chip:hover {
+    background: rgba(255,255,255,0.13);
+    text-decoration: none;
+  }
+  .chip strong { font-weight: 700; }
+  article {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 30px 34px;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+  .page-title {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 0 22px;
+  }
+  .page-title h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .intro {
+    margin: 0 0 8px;
+    color: var(--muted);
+  }
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .doc-card {
+    display: block;
+    background: linear-gradient(180deg, #ffffff, var(--panel-soft));
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 18px 18px 17px;
+    box-shadow: 0 8px 22px rgba(16, 37, 58, 0.05);
+    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    text-decoration: none;
+  }
+  .doc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(16, 37, 58, 0.09);
+    border-color: #a9c6e3;
+    text-decoration: none;
+  }
+  .doc-card .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-2);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .doc-card h3 {
+    margin: 0 0 8px;
+    font-size: 1.03rem;
+    line-height: 1.28;
+    color: #1d3d61;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+  }
+  .doc-card p {
+    margin: 0;
+    color: #5f7288;
+    font-size: 0.93rem;
+    line-height: 1.58;
+  }
+  .doc-card .path {
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: #6b8096;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    word-break: break-all;
+  }
+  h1, h2, h3, h4 {
+    color: #153a63;
+    line-height: 1.15;
+    scroll-margin-top: 24px;
+  }
+  h1 { font-size: 1.78rem; margin: 0 0 1rem; letter-spacing: -0.02em; }
+  h2 { font-size: 1.5rem; margin: 2.1rem 0 0.9rem; letter-spacing: -0.015em; }
+  h3 { font-size: 1.12rem; margin: 1.45rem 0 0.6rem; }
+  p, li {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+  p, ul, ol, table, pre, blockquote {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  a:hover { text-decoration: underline; text-underline-offset: 0.15em; }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 0.92em;
+    background: var(--accent-soft);
+    color: #0d3d69;
+    padding: 0.14rem 0.34rem;
+    border-radius: 6px;
+  }
+  pre {
+    overflow: auto;
+    background: linear-gradient(180deg, #0f172a, #102846);
+    color: #e2e8f0;
+    padding: 18px 20px;
+    border-radius: 18px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.88rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid #b9cbe0;
+    background: white;
+  }
+  th, td {
+    border-bottom: 1px solid #d7e2ee;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: linear-gradient(180deg, #0c568f, #0a4578);
+    color: #ffffff;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  tr:nth-child(even) td { background: #f8fbff; }
+  td:first-child, th:first-child { border-left: 0; }
+  td:last-child, th:last-child { border-right: 0; }
+  table code {
+    background: transparent;
+    color: #143252;
+    padding: 0;
+    border-radius: 0;
+    font-size: 0.94em;
+    font-weight: 600;
+  }
+  blockquote {
+    border-left: 4px solid #8cc7e8;
+    background: #f4fbff;
+    padding: 12px 16px;
+    border-radius: 0 12px 12px 0;
+    color: #24435f;
+  }
+  hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 1.5rem 0;
+  }
+  .doc-source {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    color: #6b8096;
+    font-size: 0.82rem;
+    margin-top: 10px;
+  }
+  .back-index {
+    position: absolute;
+    right: 34px;
+    bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(11, 79, 138, 0.08);
+    border: 1px solid rgba(11, 79, 138, 0.18);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .back-index:hover {
+    background: rgba(11, 79, 138, 0.12);
+    text-decoration: none;
+  }
+  @media (max-width: 760px) {
+    main { margin: 20px auto 32px; padding: 0 14px 28px; }
+    header, article { border-radius: 20px; padding: 22px 18px; }
+    .doc-grid { grid-template-columns: 1fr; }
+    .back-index {
+      position: static;
+      margin-top: 16px;
+      width: fit-content;
+    }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>BLE Tag2 Reverse Engineering Summary</h1>
+      <p>This document consolidates the recovered `BLE Tag2` advertisement format, the app-side evidence from `CaBLE 4.9`, and the practical decoder artifacts.</p>
+    </header>
+    <article>
+      <h1>BLE Tag2 Reverse Engineering Summary</h1>
+<p>This document consolidates the recovered <code>BLE Tag2</code> advertisement format, the app-side evidence from <code>CaBLE 4.9</code>, and the practical decoder artifacts.</p>
+<h2>What We Confirmed</h2>
+<ul>
+<li>The app package is <code>com.zucchettiaxess.bletagtools</code> version <code>4.9</code>.</li>
+<li><code>BLE Tag2</code> advertises a 10-byte manufacturer payload in the traces we captured.</li>
+<li>The app decodes bytes <code>0..8</code> but does not decode byte <code>9</code>.</li>
+<li>Live sniffing showed byte <code>9</code> behaving like a firmware-side latch:<ul>
+<li>it flips <code>0 -&gt; 1</code> on press/event transitions</li>
+<li>it returns <code>1 -&gt; 0</code> after roughly <code>8-10 s</code> in the observed traces</li>
+</ul>
+</li>
+</ul>
+<h2>Payload Layout</h2>
+<table>
+<thead>
+<tr>
+<th>Offset</th>
+<th>Size</th>
+<th>Field</th>
+<th>Meaning</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>0</code></td>
+<td><code>1</code></td>
+<td><code>buttonPressCounter</code></td>
+<td>Observed button press counter</td>
+<td>Medium-high</td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td><code>1</code></td>
+<td><code>batteryPercent</code></td>
+<td>Observed battery byte</td>
+<td>Medium-high</td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td><code>1</code></td>
+<td><code>fastPolling</code></td>
+<td>Fast/slow polling flag</td>
+<td>High</td>
+</tr>
+<tr>
+<td><code>3..4</code></td>
+<td><code>2</code></td>
+<td><code>upTimeFast</code></td>
+<td>Little-endian uptime/counter</td>
+<td>High</td>
+</tr>
+<tr>
+<td><code>5..6</code></td>
+<td><code>2</code></td>
+<td><code>upTimeSlow</code></td>
+<td>Little-endian uptime/counter</td>
+<td>High</td>
+</tr>
+<tr>
+<td><code>7..8</code></td>
+<td><code>2</code></td>
+<td><code>connectionCounter</code></td>
+<td>Little-endian connection/event counter</td>
+<td>High</td>
+</tr>
+<tr>
+<td><code>9</code></td>
+<td><code>1</code></td>
+<td><code>modeLatch</code></td>
+<td>Firmware-side mode/event latch</td>
+<td>Medium-high</td>
+</tr>
+</tbody></table>
+<h2>App-Side Evidence</h2>
+<ul>
+<li><code>Ble_Scan</code> reads manufacturer data and maps:<ul>
+<li>byte <code>0</code> to the first status field</li>
+<li>byte <code>1</code> to the second status field</li>
+<li>byte <code>2</code> to fast polling</li>
+<li>bytes <code>3..8</code> to timing/counter fields</li>
+</ul>
+</li>
+<li><code>Class_Device</code> keeps a separate <code>buttonPressed</code> boolean that is consumed by the UI and is not the same as the payload byte <code>9</code>.</li>
+<li><code>MyListFragment</code> uses a 1-second UI refresh timer, but that does not touch the advertiser payload.</li>
+<li>No app-side code path was found that clears byte <code>9</code>.</li>
+</ul>
+<h2>Live Trace Summary</h2>
+<p>Observed frames from live sniffing:</p>
+<ul>
+<li><code>05 64 01 0a 00 5f 00 00 00 01</code></li>
+<li><code>05 64 01 0a 00 5f 00 00 00 00</code></li>
+<li><code>06 64 01 0a 00 5f 00 00 00 01</code></li>
+<li><code>06 64 01 0a 00 5f 00 00 00 00</code></li>
+</ul>
+<p>In the button-correlation trace:</p>
+<ul>
+<li><code>b0</code> incremented from <code>5</code> to <code>6</code></li>
+<li><code>b9</code> flipped from <code>0</code> to <code>1</code> within <code>0.380 s</code></li>
+<li><code>b9</code> returned to <code>0</code> after about <code>9.588 s</code></li>
+</ul>
+<h2>Practical Interpretation</h2>
+<ul>
+<li>For <code>BLE Tag2</code>, the live traces suggest:<ul>
+<li>byte <code>0</code> is the button press counter</li>
+<li>byte <code>1</code> is the battery percentage</li>
+</ul>
+</li>
+<li><code>fastPolling</code> is the polling-state field the app exposes.</li>
+<li><code>modeLatch</code> is extra firmware-side state that the app ignores.</li>
+<li>The best current hypothesis is:<ul>
+<li><code>modeLatch = 1</code> means an active/event window</li>
+<li><code>modeLatch = 0</code> means the firmware has returned to a slow/inactive window</li>
+</ul>
+</li>
+</ul>
+<h2>Deliverables</h2>
+<ul>
+<li><a href="cable_ble_tag2_reverse_notes.html">Detailed reverse notes</a></li>
+<li><a href="ble_tag2_decoder_spec.html">Decoder spec</a></li>
+<li><a href="../ble_tag2_decoder_schema.json">JSON schema</a></li>
+<li><a href="../ble_tag2_decoder_pseudocode.py">Python pseudocode</a></li>
+<li><a href="../ble_tag2_decoder_table.csv">CSV table</a></li>
+<li><a href="ble_tag2_decoder_table.html">Markdown table</a></li>
+<li><a href="../ble_tag2_decoder.py">Executable parser</a></li>
+</ul>
+
+      <a class="back-index" href="index.html">Index</a>
+    </article>
+  </main>
+</body>
+</html>
