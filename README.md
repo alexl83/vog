@@ -1,5 +1,7 @@
 # BLE Tag2 Reverse-Engineering Deliverables
 
+BLE Tag2 is a vendor BLE tag used in professional ecosystems such as access control, presence detection, badge-style identification, and related reader/scanner workflows.
+
 ## Application Scope
 
 For professional use cases, the security model matters as much as the data model. If a deployment relies on clear-text advertising, static identifiers, and lacks per-session encryption or authentication, the system can be exposed to:
