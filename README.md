@@ -2,6 +2,8 @@
 
 BLE Tag2 is a vendor BLE tag used in professional ecosystems such as access control, presence detection, badge-style identification, and related reader/scanner workflows.
 
+In the app, the technical BLE identity remains the device MAC address, while the UI can present a decimal representation of that MAC as the human-readable tag code that a deployment may map to a person or employee record.
+
 ## Application Scope
 
 For professional use cases, the security model matters as much as the data model. If a deployment relies on clear-text advertising, static identifiers, and lacks per-session encryption or authentication, the system can be exposed to:
