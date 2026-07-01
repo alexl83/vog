@@ -1,33 +1,22 @@
 # BLE Tag2 Reverse-Engineering Deliverables
 
+## Application Scope
+
+For professional use cases, the security model matters as much as the data model. If a deployment relies on clear-text advertising, static identifiers, and lacks per-session encryption or authentication, the system can be exposed to:
+
+- passive tracking of people, devices, and locations
+- cloning or replay of identifiers
+- unauthorized reader interactions
+- spoofed presence or access events
+- weak assurance for audit trails and attendance records
+
+Those risks do not mean every deployment is broken, but they do mean that a BLE Tag2-style design should be evaluated carefully before being used as a trust boundary in access-control or workforce-management scenarios.
+
+From a GDPR perspective, those same weaknesses can also be problematic because clear-text radio traffic and static identifiers make tracking and re-identification easier, and they sit uneasily with privacy-by-design/default expectations when the system is used to process presence or access data.
+
 This repository is the final documentation bundle for the BLE Tag2 analysis work.
 
 It is meant for someone who did not follow the investigation from the beginning and wants a fast, reliable overview of what was learned, what was inferred from live traces, and what the payload structure means in practice.
-
-## Application Scope
-
-BLE Tag2 sits inside a broader vendor ecosystem of BLE tags and related reader/configuration flows.
-
-In practical terms, this work is about how the vendor's Android app:
-
-- scans for nearby devices
-- classifies them into product families
-- reads the advertisement payload broadcast by the tag
-- maps those bytes into internal fields
-- writes configuration values back to the device when needed
-- handles family-specific OTA update paths
-
-The reverse engineering therefore covers both the tag side and the reader/scanner side of the interaction.
-
-The same app codebase includes multiple device families, including:
-
-- `ZTAG`
-- `ZTAG_SL`
-- `TAG_R`
-- `Proximity`
-- `XIO`
-
-That means BLE Tag2 is not treated here as an isolated gadget. It is part of a larger vendor line where tags, readers/scanners, and configuration/firmware workflows are all connected.
 
 ## What This Work Covers
 
